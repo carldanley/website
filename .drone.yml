@@ -52,8 +52,10 @@ steps:
 - name: deploy-production
   image: lachlanevenson/k8s-kubectl
   environment:
-    KUBECONFIG:
+    KUBECONFIG_CONTENT:
       from_secret: kubeconfig
+    KUBECONFIG: /kube.config
+    NAMESPACE: carldanley-com
   commands:
-  - printenv KUBECONFIG | base64 -d > /kube.config
-  - kubectl --kubeconfig=/kube.config get deployments -n carldanley-com
+  - printenv KUBECONFIG_CONTENT | base64 -d > /kube.config
+  - kubectl -n ${NAMESPACE} get deployments
