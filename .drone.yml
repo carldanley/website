@@ -17,13 +17,21 @@ steps:
   commands:
   - yarn run lint
 
-- name: build
+- name: build-dist
   image: node:10.13.0-alpine
   commands:
   - yarn run prod
   when:
     ref:
     - refs/tags/*
+
+- name: build-linux-server
+  image: golang
+  environment:
+    GOOS: linux
+    CGO_ENABLED: 0
+  commands:
+  - go build -o webserver server/main.go
 
 - name: dockerize
   image: plugins/docker
