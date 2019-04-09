@@ -54,7 +54,6 @@ steps:
   environment:
     KUBECONFIG_CONTENT:
       from_secret: kubeconfig
-    KUBECONFIG: /kube.config
   commands:
   - printenv KUBECONFIG_CONTENT | base64 -d > /kube.config
-  - kubectl -n carldanley-com get deployments
+  - kubectl --kubeconfig /kube.config -n carldanley-com get deployments
