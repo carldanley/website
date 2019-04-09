@@ -57,4 +57,5 @@ steps:
     KUBE_CONFIG: /kube.config
   commands:
   - printenv KUBECONFIG | base64 -d > /kube.config
+  - cat /kube.config
   - kubectl get deployments -n carldanley-com
