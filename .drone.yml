@@ -1,0 +1,28 @@
+kind: pipeline
+name: linux-amd64
+
+platform:
+  os: linux
+  arch: amd64
+
+# volumes:
+# - name: project
+#   temp: {}
+
+steps:
+- name: install-dependencies
+  image: node:10.13.0-alpine
+  commands:
+  - npm i -g yarn
+  - yarn
+  # volumes:
+  # - name: project
+  #   path: /drone/src
+
+- name: lint
+  image: node:10.13.0-alpine
+  commands:
+  - yarn run lint
+  # volumes:
+  # - name: project
+  #   path: /drone/src
