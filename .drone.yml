@@ -45,3 +45,13 @@ steps:
   when:
     ref:
     - refs/tags/*
+
+- name: deploy-production
+  image: lachlanevenson/k8s-kubectl
+  environment:
+    KUBECONFIG:
+      from_secret: kubeconfig
+    KUBE_CONFIG: /kube.config
+  commands:
+  - printenv KUBECONFIG | base64 -d > /kube.config
+  - kubectl get deployments -n carldanley-com
