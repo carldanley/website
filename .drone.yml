@@ -5,24 +5,35 @@ platform:
   os: linux
   arch: amd64
 
-# volumes:
-# - name: project
-#   temp: {}
-
 steps:
 - name: install-dependencies
   image: node:10.13.0-alpine
   commands:
   - npm i -g yarn
   - yarn
-  # volumes:
-  # - name: project
-  #   path: /drone/src
 
 - name: lint
   image: node:10.13.0-alpine
   commands:
   - yarn run lint
-  # volumes:
-  # - name: project
-  #   path: /drone/src
+
+- name: build
+  image: node:10.13.0-alpine
+  commands:
+  - yarn run prod
+  when:
+    ref:
+    - refs/tags/*
+
+- name: dockerize
+  image: plugins/docker
+  settings:
+    auto_tag: true
+    repo: carldanley/website
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+  when:
+    ref:
+    - refs/tags/*
