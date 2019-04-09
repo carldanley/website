@@ -55,7 +55,6 @@ steps:
     KUBECONFIG_CONTENT:
       from_secret: kubeconfig
     KUBECONFIG: /kube.config
-    NAMESPACE: carldanley-com
   commands:
   - printenv KUBECONFIG_CONTENT | base64 -d > /kube.config
-  - kubectl -n $NAMESPACE get deployments
+  - kubectl -n carldanley-com get deployments
