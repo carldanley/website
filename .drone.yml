@@ -32,6 +32,9 @@ steps:
     CGO_ENABLED: 0
   commands:
   - go build -o webserver server/main.go
+  when:
+    ref:
+    - refs/tags/*
 
 - name: dockerize
   image: plugins/docker
