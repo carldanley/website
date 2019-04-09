@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"io"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -30,7 +29,7 @@ func handleFileRequest(w http.ResponseWriter, r *http.Request) {
 	extension := path.Ext(filePath)
 
 	if extension == ".js" {
-		sendJSFile(filePath, w)
+		sendRawFile("text/javascript", filePath, w)
 	} else if extension == ".css" {
 		sendRawFile("text/css", filePath, w)
 	} else {
@@ -52,16 +51,6 @@ func getFileContentType(filePath string) string {
 	}
 
 	return http.DetectContentType(buffer)
-}
-
-func sendJSFile(filePath string, w http.ResponseWriter) {
-	buffer, err := ioutil.ReadFile(filePath)
-	if err != nil {
-		return
-	}
-
-	w.Header().Set("Content-Type", "text/javascript")
-	w.Write(buffer)
 }
 
 func sendRawFile(contentType, filePath string, w http.ResponseWriter) {
