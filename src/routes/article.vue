@@ -17,6 +17,12 @@
       <section class="meta">
         <div class="title">{{ currentArticle.title }}</div>
         <div class="date">{{ currentArticle.date | dateString }}</div>
+        <div class="tags">
+          <font-awesome-icon icon="tags"></font-awesome-icon>
+          <router-link v-for="(tag, index) in currentArticle.tags" :key="index" :to="tagLink(tag)">
+            {{ tag }}
+          </router-link>
+        </div>
       </section>
       <section class="content" v-html="currentArticle.content"></section>
     </article>
@@ -82,6 +88,9 @@ export default {
         this.$router.push(this.nextArticleURL);
       }
     },
+    tagLink(value) {
+      return `/tags/${value}`;
+    },
   },
   mounted() {
     document.querySelectorAll('article pre code').forEach(block => highlightJS.highlightBlock(block));
@@ -127,4 +136,23 @@ export default {
 
     .date
       margin-top 10px
+
+    .tags
+      margin-top 10px
+
+      svg
+        color #fb590a
+        font-size 12px
+        line-height 12px
+        margin-right 10px
+
+      a
+        margin-right 6px
+        margin-bottom 10px
+        color #666
+        text-decoration none
+
+        &:hover
+          border-bottom 1px solid #fb590a
+          color #fb590a
 </style>

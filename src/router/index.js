@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import ArticleRoute from '@/routes/article';
 import HomeRoute from '@/routes/home';
 import NotFoundRoute from '@/routes/not-found';
+import TagsRoute from '@/routes/tags';
 import articles from '@/articles';
 import _ from 'lodash';
 
@@ -15,6 +16,23 @@ const router = new Router({
       path: '/',
       name: 'Home',
       component: HomeRoute,
+    }, {
+      path: '/tags/:tag',
+      name: 'tags',
+      component: TagsRoute,
+      props(to) {
+        const tag = to.params.tag.toLowerCase();
+        const foundArticles = _.filter(articles, (article) => {
+          const tags = _.map(article.tags, tmpTag => tmpTag.toLowerCase());
+
+          return tags.includes(tag);
+        });
+
+        return {
+          tag,
+          foundArticles,
+        };
+      },
     }, {
       path: '/blog/:id',
       name: 'Blog',

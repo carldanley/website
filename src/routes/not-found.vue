@@ -1,12 +1,10 @@
 <template>
-  <div class="not-found" v-title="'404 - Not Found | Carl Danley'">
+  <div class="not-found" v-title="'Not Found | Carl Danley'">
     <navigation></navigation>
     <article>
       <div class="numbers">404</div>
       <div class="caption">Ugh. There seems to be an issue...</div>
-      <div class="subcaption">
-        The page you're looking for might not exist anymore ...
-      </div>
+      <div class="subcaption">The page you're looking for might not exist anymore ...</div>
       <router-link to="/">&xlarr; Go to home</router-link>
     </article>
   </div>
