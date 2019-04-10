@@ -58,4 +58,4 @@ steps:
     NAMESPACE: carldanley-com
   commands:
   - printenv KUBECONFIG_CONTENT | base64 -d > /kube.config
-  - kubectl -n $NAMESPACE get deployments
+  - kubectl -n $NAMESPACE apply -f ./kubernetes
